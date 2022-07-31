@@ -1,0 +1,99 @@
+.champion{
+    color: white;
+    display: flex;
+    align-items: center;    
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+}
+
+.champion img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.imgControl{
+    border-style:solid;
+    border-width: thin;
+    width: 73px;
+    height: 79px;
+}
+
+.control{
+    border-style:solid;
+    border-width: thin;
+    width: 66px;
+    height: 72px;
+    display:flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-left: 5px;
+    padding: 3px;
+}
+
+.valid{
+    background: url('../resources/greenBackground.jpg') no-repeat 50%;
+    background-size: cover;
+    position: relative;
+    z-index: 0;
+}
+.invalid{
+    background: url('../resources/redBackground.jpg') no-repeat 50%;
+    background-size: cover;
+    position: relative;
+    z-index: 0;
+}
+
+.half{
+    background: url('../resources/yellowBackground.jpg') no-repeat 50%;
+    background-size: cover;
+    position: relative;
+    z-index: 0;
+}
+
+.inferior{
+    background: url('../resources/redBackground.jpg') no-repeat 50%;
+    background-size: cover;
+    position: relative;
+    z-index: 0;
+}
+
+.superior{
+    background: url('../resources/redBackground.jpg') no-repeat 50%;
+    background-size: cover;
+    position: relative;
+    z-index: 0;
+}
+
+.inferior::after{
+    position: absolute;
+    top: 1px;
+    left: 0;
+    width: 100%;
+    clip-path:polygon(97% 60%,80% 60%,80% 5%,20% 5%,20% 60%,3% 60%,50% 95%);
+    -webkit-clip-path: polygon(97% 60%,80% 60%,80% 5%,20% 5%,20% 60%,3% 60%,50% 95%);
+    height: 100%;
+    background: rgba(0,0,0,.5);
+    content: "";
+    z-index: -1;
+    opacity: 1;
+    transition: background-color .3s ease;
+}
+
+.superior::after{
+    position: absolute;
+    bottom: 1px;
+    left: 0;
+    width: 100%;
+    clip-path: polygon(97% 40%,80% 40%,80% 95%,20% 95%,20% 40%,3% 40%,50% 5%);
+    -webkit-clip-path: polygon(97% 40%,80% 40%,80% 95%,20% 95%,20% 40%,3% 40%,50% 5%);
+    height: 100%;
+    background: rgba(0,0,0,.5);
+    content: "";
+    z-index: -1;
+    opacity: 1;
+    transition: background-color .3s ease;
+}
+
+
+

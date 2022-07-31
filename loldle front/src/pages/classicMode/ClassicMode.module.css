@@ -1,0 +1,23 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+.champions{
+    padding-top: 100px;
+    height: auto;
+    width: auto;
+}
+
+.container input{
+    width: 17rem;
+    height: 2rem;
+    padding-left: 12px;
+}
+
+.container button{
+    height:2rem;
+}
