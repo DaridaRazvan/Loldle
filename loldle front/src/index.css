@@ -1,4 +1,15 @@
+@font-face{
+  font-family: 'frizQuadrata';
+  src: url('/src/resources/fonts/FrizQuadrata.TTF');
+}
+
 body {
-  font-family: sans-serif;
-  background-color: darkgray;
+  height: 100%;
+  margin: 0;
+  font-family: 'frizQuadrata';
+  background-size: cover;
+  background-image:linear-gradient(to bottom, rgba(245, 246, 252, 0), rgba(0, 0, 0, 1)),
+  url('/src/resources/background.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }

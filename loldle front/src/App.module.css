@@ -1,6 +1,23 @@
+@font-face{
+    font-family: 'frizQuadrataBold';
+    src: url('/src/resources/fonts/FrizQuadrata.otf');
+}
+
 .header{
     margin: auto;
     width: 50%;
     text-align: center;
     margin-bottom: 10rem;
+    
+}
+
+.header h1{
+    border-color: black;
+    font-family: 'frizQuadrataBold';
+    font-size: 56px;
+    color: black;
+    background: -webkit-linear-gradient(rgb(255,215,0), rgb(205, 124, 43));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke: 1px;
 }

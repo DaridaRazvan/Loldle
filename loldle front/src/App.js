@@ -9,7 +9,7 @@ function App() {
   return (
     <Fragment>
       <div className={classes.header}>
-        <h1> Loldle</h1>
+        <h1> LoLdle</h1>
       </div>
       <Routes>
         <Route exact path="/" element={<MainPage />} />

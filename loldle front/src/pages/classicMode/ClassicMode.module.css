@@ -6,8 +6,33 @@
     text-align: center;
 }
 
+.container input{
+    width: 100%;
+    background-color : #424242; 
+    padding: 5px 1px;
+    color:white;
+    font-size: 18px;
+}
+
+.container input:focus {
+    outline: none;
+}
+
+.container button{
+  background-color: #346dc9;
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  cursor: pointer;
+  width: 70px;
+  height: 45px !important;
+  padding: 10px; 
+}
+
 .champions{
-    padding-top: 100px;
+    padding-top: 10px;
     height: auto;
     width: auto;
 }
@@ -20,4 +45,27 @@
 
 .container button{
     height:2rem;
+}
+
+.championTags{
+    height: auto;
+    width: auto;
+    display: flex;
+    padding-top: 100px;
+    color: white;
+    gap: 5px;
+}
+
+.championTags div{
+    width: 74px;
+    height: 45px;
+    border-bottom: 3px solid;
+    align-content: center;
+}
+
+
+.inputList{
+    z-index:1; 
+    position:absolute;
+    width: 290px;
 }

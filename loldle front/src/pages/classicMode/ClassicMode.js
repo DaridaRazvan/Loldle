@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import Champion from '../../components/Champion';
 import ChampionSmall from '../../components/ChampionSmall';
+import { fetchChampion, getChampion, getChampions } from '../../services/ChampionService';
 
 const ClassicMode = () => {
   const dispatch = useDispatch();
@@ -16,15 +17,17 @@ const ClassicMode = () => {
   const [championList, setChampionList] = useState([]);
   const [championInputList, setChampionInputList] = useState([]);
 
-  useEffect(() => {
-    const fetchChampion = async () => {
-      const response = await fetch('http://localhost:8080/api/champion/random');
-
-      if (!response.ok) {
-        throw new Error('Something went wrong');
+  const containsChampion = (name) => {
+    for (const key in championList) {
+      if (championList[key].name === name) {
+        return true;
       }
+    }
+    return false;
+  }
 
-      const responseData = await response.json();
+  useEffect(() => {
+    fetchChampion().then(responseData => {
       dispatch(championActions.setChampion({
         id: responseData.id,
         name: responseData.name,
@@ -37,16 +40,13 @@ const ClassicMode = () => {
         resource: responseData.resource,
         species: responseData.species
       }));
-    }
-
-    fetchChampion().catch((error) => {
+    }).catch((error) => {
       console.log("Error: ", error)
     })
-
   }, [dispatch])
 
   const oneChampionInInputList = () => {
-    if(championInputList.length === 1){
+    if (championInputList.length === 1) {
       championRef.current.value = championInputList[0].name;
     }
   }
@@ -54,27 +54,16 @@ const ClassicMode = () => {
   const submitHandler = (event) => {
     event.preventDefault();
 
-    const getChampion = async () => {
-      
-      const inputChampion = championRef.current.value;
-      const response = await fetch(`http://localhost:8080/api/champion/get/${inputChampion}`);
+    const inputChampion = championRef.current.value;
 
-      if (!response.ok) {
-        throw new Error(response.status)
-      }
-      console.log(response.status);
-      const responseData = await response.json();
-
-
+    oneChampionInInputList();
+    getChampion(inputChampion).then((responseData) => {
       setChampionList(championList => [responseData, ...championList]);
 
       if (inputChampion === champion.name) {
         setGameOver(true);
       }
-    }
-
-    oneChampionInInputList();
-    getChampion().catch((error) => {
+    }).catch((error) => {
       console.log(error);
     });
     championRef.current.value = '';
@@ -83,33 +72,27 @@ const ClassicMode = () => {
 
   const inputChangedHandler = (event) => {
 
-    const getChampions = async () => {
-      const response = await fetch(`http://localhost:8080/api/champion/get/prefix/${event.target.value}`);
+    setChampionInputList([]);
+    if (event.target.value === '')
+      return;
 
-      if (!response.ok) {
-        throw new Error(response.status)
-      }
-      const responseData = await response.json();
-
-      //setChampionInputList([]);
+    getChampions(event.target.value).then((responseData) => {
       const inputChampions = [];
       for (const key in responseData) {
-        inputChampions.push({
-          id: responseData[key].id,
-          image: responseData[key].image,
-          name: responseData[key].name
-        });
+        if (!containsChampion(responseData[key].name)) {
+          inputChampions.push({
+            id: responseData[key].id,
+            image: responseData[key].image,
+            name: responseData[key].name
+          });
+        }
       }
 
       setChampionInputList(inputChampions);
-    }
+    }).catch((error) => {
+      console.log(error);
+    });
 
-    setChampionInputList([]);
-    if (event.target.value !== '') {
-      getChampions().catch((error) => {
-        console.log(error);
-      });
-    }
   }
 
   const smallChampionClicked = (name) => {
@@ -123,6 +106,7 @@ const ClassicMode = () => {
       image={champion.image}
       name={champion.name}
     />);
+
 
   const champions = championList.map(champion =>
     <Champion
@@ -139,17 +123,30 @@ const ClassicMode = () => {
 
   return (
     <div className={classes.container}>
-      {!gameOver && <form onSubmit={submitHandler}>
-        <input type="text" ref={championRef}
-          onChange={inputChangedHandler}
-          onBlur={() => setTimeout(() => setIsInputFocused(false), 300)}
-          onFocus={() => setIsInputFocused(true)}
-        />
-        <button>Submit</button>
-        {isInputFocused && inputChampions}
+      {!gameOver &&
+        <form onSubmit={submitHandler}>
+          <input stype="text" ref={championRef}
+            onChange={inputChangedHandler}
+            onBlur={() => setTimeout(() => setIsInputFocused(false), 300)}
+            onFocus={() => setIsInputFocused(true)}
+          />
+          <button>Submit</button>
 
-      </form>}
+          <div className={classes.inputList}> {isInputFocused && inputChampions}</div>
+        </form>
+      }
       {gameOver && <p>You guessed The Champion!</p>}
+
+      <div className={classes.championTags}>
+        <div>Champion</div>
+        <div>Gender</div>
+        <div>Postion(s)</div>
+        <div>Species</div>
+        <div>Resource</div>
+        <div>Range Type</div>
+        <div>Region(s)</div>
+        <div>Release Year</div>
+      </div>
 
       <div className={classes.champions}>
         {champions}
